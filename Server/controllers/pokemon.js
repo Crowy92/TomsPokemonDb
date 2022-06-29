@@ -4,9 +4,14 @@ const router = express.Router();
 
 const Pokemon = require('../models/pokemon')
 
-router.get('/', (req, res) => {
-    const data = Pokemon.all;
-    res.send(data)
+router.get('/', async (req, res) => {
+    try {
+        const pokemon = await Pokemon.all;
+        res.status(200).json({data: pokemon})
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({error: err})
+    }
 })
 
 router.get('/:id', (req, res) => {
