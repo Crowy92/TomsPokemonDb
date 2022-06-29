@@ -14,24 +14,39 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const selectedPokemon = Pokemon.findById(id)
-    console.log(selectedPokemon)
-    res.send(selectedPokemon)
+router.get('/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const selectedPokemon = await Pokemon.findById(id)
+        // res.status(200).json({data: selectedPokemon})
+        res.send(selectedPokemon)
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err)
+    }
 })
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
+    try {
     const data = req.body;
     const newPokemon = Pokemon.create(data);
     res.status(201).send(newPokemon);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err)
+    }
 });
 
-router.delete('/:id', (req, res) => {
-    const pokeId = parseInt(req.params.id);
-    const pokeToDestroy = Pokemon.findById(pokeId);
-    pokeToDestroy.destroy();
-    res.status(204).send();
+router.delete('/:id', async (req, res) => {
+    try {
+        const pokeId = parseInt(req.params.id);
+        const pokeToDestroy = await Pokemon.findById(pokeId);
+        pokeToDestroy.destroy();
+        res.status(204).send();
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err)
+    }
 });
 
 module.exports = router

@@ -1,7 +1,6 @@
 const fetchPokemon = async (index) => {
     const response = await fetch(`http://localhost:3000/pokemon/${index}/`)
     const pokemonData = await response.json();
-    // console.log(pokemonData);
     const title = document.getElementById('pokemonName');
     title.textContent = pokemonData.name;
 }
@@ -13,7 +12,7 @@ const button = document.getElementById('nextPokemon');
 button.addEventListener('click', () => {
     index ++;
     fetchPokemon(index).catch(err => {
-        console.log(err)
+        console.log("error", err)
         index = 0;
     })
 })
@@ -41,6 +40,29 @@ const submitPokemon = async (e) => {
         .catch(console.warn)
 };
 
+// delete
+const deletePokemon = async (e) => {
+    e.preventDefault();
+    console.log(e.target);
+    const id = e.target.pokemonId.value
+    const pokeData = {
+        name: id
+    };
+
+    const options = { 
+        method: 'DELETE',
+        body: JSON.stringify(pokeData),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+
+    fetch(`http://localhost:3000/pokemon/${id}`, options)
+        .then(r => r.json())
+        .then(appendDelete)
+        .catch(console.warn)
+};
+
 function appendSuccess(pokeData){
     const newH3 = document.createElement('h3');
     newH3.textContent = `Name: ${pokeData.name} || Type: ${pokeData.type}`
@@ -48,6 +70,15 @@ function appendSuccess(pokeData){
     body.append(newH3);
 };
 
+function appendDelete(){
+    const newH3 = document.createElement('h3');
+    newH3.textContent = `Pokemon Deleted`
+    const body = document.querySelector('body');
+    body.append(newH3);
+};
 
 const form = document.querySelector('#new-poke-form');
 form.addEventListener('submit', submitPokemon);
+
+const formDelete = document.querySelector('#delete-poke-form');
+formDelete.addEventListener('submit', deletePokemon);

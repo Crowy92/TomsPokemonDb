@@ -5,8 +5,8 @@ services:
     ports:
       - 3000:3000
     environment:
-      - DB_CONNECTION=mongodb://pokies-admin:pokies-pass@db:27017
-      - DB_NAME=pokies
+      - DB_CONNECTION=mongodb://doggos-admin:doggos-pass@db:27017
+      - DB_NAME=doggos
     volumes:
       - type: bind
         source: ./Server
@@ -18,12 +18,11 @@ services:
   db:
     image: mongo:latest
     environment: 
-      - MONGO_INITDB_ROOT_USERNAME=pokies-admin
-      - MONGO_INITDB_DATABASE=pokies
-      - MONGO_INITDB_ROOT_PASSWORD=pokies-pass
+      - MONGO_INITDB_ROOT_USERNAME=doggos-admin
+      - MONGO_INITDB_DATABASE=doggos
+      - MONGO_INITDB_ROOT_PASSWORD=doggos-pass
     volumes:
       - "dbdata:/var/lib/mongodb/data"
-      - "./Server/db/seed.js:/docker-entrypoint-initdb.d/seed.js:ro"
-      # - "./db/seed.js:/docker-entrypoint-initdb.js/seed.js:ro"
+      - "./db/seed.js:/docker-entrypoint-initdb.d/seed.js:ro"
 volumes:
   dbdata:
