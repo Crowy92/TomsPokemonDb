@@ -5,9 +5,9 @@ const data = [
     { id: 4, name: 'squi', type: 'water' },
     { id: 5, name: 'warto', type: 'water' },
     { id: 6, name: 'blast', type: 'water' },
-    { id: 7, name: 'char', type: 'water' },
-    { id: 8, name: 'charm', type: 'water' },
-    { id: 9, name: 'chari', type: 'water' },
+    { id: 7, name: 'char', type: 'fire' },
+    { id: 8, name: 'charm', type: 'fire' },
+    { id: 9, name: 'chari', type: 'fire/flying' },
 ]
 
 module.exports = data;
